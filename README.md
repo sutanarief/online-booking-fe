@@ -2,12 +2,16 @@
 
 Online-Booking is a web application designed to streamline the online booking process for wellness events, such as health talks and onsite screenings. The platform also provides a mechanism for vendors to review and either approve or reject these event requests.
 
+You can check Live App Demo [Here](https://wellness-event-booking.vercel.app)
+(***need to run the backend in localhost***)
+
 
 # Prerequisites
 
 Before you begin, ensure you have met the following requirements:
 * Node JS v20.9.0
 * Google Map APIKEY [Tutorial](https://developers.google.com/maps/documentation/javascript)
+* Clone and run [this repository](https://github.com/sutanarief/online-booking-api)
 
 # User Test Credential
 
@@ -129,13 +133,20 @@ It also includes 3 modal types:
 
 - ### **Vendor Flow**
 
-  - As a vendor, you **cannot** create/book an event. After logging in as a Vendor, you will be redirected to the Dashboard Page with an initially empty table.
+  - As a vendor, you **cannot** create/book an event. After logging in as a Vendor, you will be redirected to the Dashboard Page.
+
+    **Table with no Data**
 
     <img src="documentation/vendor_dashboard_empty.png" alt="Vendor Dashboard Image" width="500">
 
+    **Table with Data**
+
+    <img src="documentation/vendor_dashboard.png" alt="Vendor Dashboard Image" width="500">
+
+
     - ***Table Explanation***
 
-      When login as a **Vendor** there is just one column that is different with HR table
+      When login as a **Vendor** there are two columns that are different from HR table
       
       - **Company Name**
 
