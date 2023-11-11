@@ -15,7 +15,7 @@ const { Text } = Typography
 const Dashboard = () => {
   const [data, setData] = useState([])
   const [user, setUser] = useState({})
-  const [postalCode, setPostalCode] = useState('')
+  const [countryList, setCountryList] = useState([])
   const [tableParams, setTableParams] = useState({
     pagination: {
       current: 1,
@@ -44,6 +44,37 @@ const Dashboard = () => {
   })
   const [filterVendor, setFilterVendor] = useState([])
   const navigate = useNavigate()
+
+
+  const [selectedCountry, setSelectedCountry] = useState({
+    value: null,
+    label: null
+  })
+  const [postalCode, setPostalCode] = useState('')
+  const [debouncedValue, setDebouncedValue] = useState(postalCode);
+
+  useEffect(() => {
+
+    const timer = setTimeout(() => setDebouncedValue(postalCode), 500)
+
+    return () => clearTimeout(timer)
+  }, [postalCode]);
+
+
+  useEffect(() => {
+
+    const controller = new AbortController();
+
+    if (debouncedValue) {
+      get.getLocation(debouncedValue, selectedCountry.value)
+        .then(data => {
+          setLocation(data.results[0].formatted_address)
+        })
+    }
+
+    return () => controller.abort();
+
+  }, [debouncedValue])
 
   const columns = [
     {
@@ -302,6 +333,10 @@ const Dashboard = () => {
     })
   }
 
+  const onChangeCountry = (val, e) => {
+    setSelectedCountry(e)
+  }
+
   const onChange = (e) => {
     const { value, name } = e.target
     if (name === 'location') {
@@ -362,6 +397,24 @@ const Dashboard = () => {
             />
           ))}
         </Flex>
+      </Flex>
+
+      <Flex vertical gap='small'>
+
+        <Text style={{ fontSize: '1rem' }}>Country and Postal Code</Text>
+        <Space.Compact>
+          <Select
+            size='large'
+            placeholder="Select Country"
+            options={countryList}
+            showSearch
+            style={{ minWidth: 'fit-content', }}
+            filterOption={filterOption}
+            value={selectedCountry.label}
+            onChange={onChangeCountry}
+          />
+          <Input size="large" disabled={selectedCountry.label ? false : true} placeholder='Input your postal code' onChange={onChangePost} />
+        </Space.Compact>
       </Flex>
 
       <Flex vertical gap={'small'}>
@@ -450,7 +503,7 @@ const Dashboard = () => {
       })
   }
 
-  const onChangePost = (e) => {
+  function onChangePost(e) {
     const { value } = e.target
     console.log(e)
     setPostalCode(value)
@@ -463,20 +516,29 @@ const Dashboard = () => {
 
   }
 
+  const getCountryList = async () => {
+    await get.getCountryList()
+      .then((res) => {
+        setCountryList(res.map((val) => ({
+          label: val.flag + ' ' + val.name.common,
+          value: val.cca2
+        })))
+      })
+  }
+
+  function filterOption(input, option) {
+    return (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+  }
+
   useEffect(() => {
     getlist()
     decodeJwt()
     getEventOptions()
+    getCountryList()
   }, [])
 
   return (
     <div className='dashboard-container'>
-
-      <Space.Compact>
-        <Select defaultValue="Zhejiang" />
-        <Input defaultValue="Xihu District, Hangzhou" />
-      </Space.Compact>
-      <Button onClick={searchPostal}>Confirm</Button>
       <CustomModal
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
