@@ -82,16 +82,17 @@ const Dashboard = () => {
       dataIndex: 'name',
       key: 'name',
       fixed: 'left',
-      align: 'center'
+      align: 'center',
+      width: 150
     },
     {
       title: 'Vendor Name',
       dataIndex: 'vendor',
       key: 'vendor_id',
-      fixed: 'left',
       align: 'center',
       hidden: user.role === 2,
       filters: filterVendor,
+      width: 150,
       onFilter: (value, record) => record.vendor === value,
     },
     {
@@ -100,13 +101,15 @@ const Dashboard = () => {
       key: 'hr_id',
       fixed: 'left',
       align: 'center',
-      hidden: user.role === 1
+      hidden: user.role === 1,
+      width: 150,
     },
     {
       title: 'Confirmed/Proposed Date',
       dataIndex: 'confirmed_date',
       key: 'confirmed_date',
       align: 'center',
+      width: 210,
       render: (item) => {
         if (Array.isArray(item)) {
           return <ul style={{ listStyleType: 'none' }}>
@@ -124,6 +127,7 @@ const Dashboard = () => {
       dataIndex: 'createdAt',
       key: 'createdAt',
       align: 'center',
+      width: 150,
       render: (item) => item.split('T')[0],
     },
     {
@@ -131,7 +135,7 @@ const Dashboard = () => {
       dataIndex: 'status',
       key: 'status',
       align: 'center',
-      fixed: 'right',
+      width: 150,
       render: (item) => {
         switch (item) {
           case 2:
@@ -164,6 +168,7 @@ const Dashboard = () => {
       key: 'action',
       fixed: 'right',
       align: 'center',
+      width: 100,
       render: (_, record) => (
         <Button size="middle" onClick={() => getDetail(record)}>
           View
@@ -512,12 +517,10 @@ const Dashboard = () => {
 
   function onChangePost(e) {
     const { value } = e.target
-    console.log(e)
     setPostalCode(value)
   }
 
   const searchPostal = async () => {
-    console.log(postalCode)
     await get.getLocation(postalCode)
       .then((res) => console.log(res))
 
@@ -570,13 +573,16 @@ const Dashboard = () => {
         <h2>Welcome {user.username}</h2>
         <Button onClick={handleLogout}>Logout</Button>
       </Flex>
-      {console.log(filterVendor)}
       <div className='table-container'>
         <Table
           columns={columns}
           dataSource={data}
-          pagination={tableParams.pagination}
           size='medium'
+          pagination={false}
+          scroll={{
+            x: 240,
+            y: 290
+          }}
           bordered={true}
           {...(user.role === 1 && {
             title: () => (
