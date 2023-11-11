@@ -32,7 +32,7 @@ const Login = () => {
   return (
     <div className='login-container'>
       <div className='form-container'>
-        <h2>Log In to your account</h2>
+        <h2 style={{ color: '#363636' }}>Log In to your account</h2>
         <Form
           name="basic"
           layout='vertical'

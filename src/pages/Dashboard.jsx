@@ -376,15 +376,19 @@ const Dashboard = () => {
 
   const modalBody = (
     <Flex vertical gap='middle' style={{ padding: '20px 0' }}>
-      <Select
-        options={eventOption}
-        size='large'
-        style={{ width: '100%', color: '#000' }}
-        placeholder="Pick an Event"
-        value={event.label}
-        onChange={onChangeSelect}
-        disabled={modalType}
-      />
+      <Flex vertical gap={'small'}>
+        <Text style={{ fontSize: '1rem' }}>Event</Text>
+
+        <Select
+          options={eventOption}
+          size='large'
+          style={{ width: '100%', color: '#000' }}
+          placeholder="Pick an Event"
+          value={event.label}
+          onChange={onChangeSelect}
+          disabled={modalType}
+        />
+      </Flex>
       <Flex vertical gap={'small'}>
         <Text style={{ fontSize: '1rem' }}>Proposed Dates</Text>
         <DatePicker size='large' disabledDate={disabledDate} onChange={handleChangeDate} value={''} disabled={modalType} />
@@ -399,23 +403,26 @@ const Dashboard = () => {
         </Flex>
       </Flex>
 
-      <Flex vertical gap='small'>
+      {!modalType && (
+        <Flex vertical gap='small'>
+          <Text style={{ fontSize: '1rem' }}>Country and Postal Code</Text>
+          <Space.Compact>
+            <Select
+              size='large'
+              placeholder="Select Country"
+              options={countryList}
+              disabled={modalType}
+              showSearch
+              style={{ minWidth: 'fit-content', }}
+              filterOption={filterOption}
+              value={selectedCountry.label}
+              onChange={onChangeCountry}
+            />
+            <Input size="large" disabled={selectedCountry.label || !modalType ? false : true} placeholder='Input your postal code' onChange={onChangePost} />
+          </Space.Compact>
+        </Flex>
+      )}
 
-        <Text style={{ fontSize: '1rem' }}>Country and Postal Code</Text>
-        <Space.Compact>
-          <Select
-            size='large'
-            placeholder="Select Country"
-            options={countryList}
-            showSearch
-            style={{ minWidth: 'fit-content', }}
-            filterOption={filterOption}
-            value={selectedCountry.label}
-            onChange={onChangeCountry}
-          />
-          <Input size="large" disabled={selectedCountry.label ? false : true} placeholder='Input your postal code' onChange={onChangePost} />
-        </Space.Compact>
-      </Flex>
 
       <Flex vertical gap={'small'}>
         <Text style={{ fontSize: '1rem' }}>Location</Text>
