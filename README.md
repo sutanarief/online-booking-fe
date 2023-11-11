@@ -37,7 +37,7 @@ and also have 2 modal types :
 
 - Base Flow
 Everytime you go to the website if you not logged in you will redirected to Login Page
-![alt text](https://github.com/sutanarief/online-booking-fe/blob/main/src/assets/loginPage.png?raw=true)
+![Login Page Image](https://github.com/sutanarief/online-booking-fe/blob/main/src/assets/loginPage.png)
 
 
 ## Company HR Flow
