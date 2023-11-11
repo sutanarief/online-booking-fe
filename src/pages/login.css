@@ -1,0 +1,23 @@
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: center;
+  justify-content: center;
+  width: fit-content;
+  padding: 30px;
+  border-radius: 8px;
+  margin: 0 auto;
+
+  background: #fff;
+}
+
+h2 {
+  color: #363636;
+}
+
+.login-container {
+  display: flex;
+  align-items: center;
+  height: 100vh;
+}
