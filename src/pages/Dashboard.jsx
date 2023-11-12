@@ -53,29 +53,6 @@ const Dashboard = () => {
   const [postalCode, setPostalCode] = useState('')
   const [debouncedValue, setDebouncedValue] = useState(postalCode);
 
-  useEffect(() => {
-
-    const timer = setTimeout(() => setDebouncedValue(postalCode), 500)
-
-    return () => clearTimeout(timer)
-  }, [postalCode]);
-
-
-  useEffect(() => {
-
-    const controller = new AbortController();
-
-    if (debouncedValue) {
-      get.getLocation(debouncedValue, selectedCountry.value)
-        .then(data => {
-          setLocation(data.results[0].formatted_address)
-        })
-    }
-
-    return () => controller.abort();
-
-  }, [debouncedValue])
-
   const columns = [
     {
       title: 'Event Name',
@@ -546,6 +523,28 @@ const Dashboard = () => {
     getEventOptions()
     getCountryList()
   }, [])
+
+
+
+  useEffect(() => {
+    const timer = setTimeout(() => setDebouncedValue(postalCode), 500)
+
+    return () => clearTimeout(timer)
+  }, [postalCode]);
+
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    if (debouncedValue) {
+      get.getLocation(debouncedValue, selectedCountry.value)
+        .then(data => {
+          setLocation(data.results[0].formatted_address)
+        })
+    }
+
+    return () => controller.abort();
+  }, [debouncedValue])
 
   return (
     <div className='dashboard-container'>
