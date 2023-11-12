@@ -27,7 +27,7 @@ Before you begin, ensure you have met the following requirements:
 # Using Online-Booking
 Add .env file with these variables
 ```env
-VITE_BASE_URL=http://localhost:3000/api/v1 //exactly same
+VITE_BASE_URL=https://app-1482f798-b2d2-411f-802c-7d661d24d715.cleverapps.io/api/v1
 VITE_GOOGLE_MAP_API_KEY=<YOUR GOOGLE MAP API KEY>
 ```
 
